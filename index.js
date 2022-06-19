@@ -8,10 +8,19 @@ app.set('view engine', 'hbs'); // view engine is set to handlebars
 app.use('/assets', express.static(__dirname + '/assets')); // static files are served from the assets folder
 app.use(express.urlencoded({ extended: false }));
 
+let dataProject = [];
+
 let isLogin = true;
 
 app.get('/', (req, res) => {
-    res.render('index', { isLogin, dataProject });
+    let data = dataProject.map((item) => {
+        return {
+            ...item,
+            isLogin
+        }
+    });
+
+    res.render('index', { isLogin, data });
     console.log(dataProject);
 });
 
@@ -74,8 +83,6 @@ function dhm(t) {
 
     return d;
 }
-
-let dataProject = [];
 
 app.post('/add-project', (req, res) => {
     let startdate = req.body.startdate;
