@@ -8,7 +8,16 @@ app.set('view engine', 'hbs'); // view engine is set to handlebars
 app.use('/assets', express.static(__dirname + '/assets')); // static files are served from the assets folder
 app.use(express.urlencoded({ extended: false }));
 
-let dataProject = [];
+let dataProject = [
+    {
+        id: 1,
+        projectname: 'Aplikasi Rental PS',
+        duration: '23 hari',
+        description: 'Aplikasi ini menggunakan ReactJS dan Firebase untuk mengelola data rental PS',
+        technologies: ['react', 'android'],
+        imageupload: '../assets/img/projek1.jpg'
+    }
+];
 
 let isLogin = true;
 
@@ -99,6 +108,14 @@ app.post('/add-project', (req, res) => {
         imageupload: '../assets/img/projek1.jpg',
     };
     dataProject.push(project);
+    res.redirect('/');
+});
+
+app.get('/deleteproject/:id', (req, res) => {
+    let id = req.params.id;
+    dataProject = dataProject.filter((item) => {
+        return item.id != id;
+    })
     res.redirect('/');
 });
 

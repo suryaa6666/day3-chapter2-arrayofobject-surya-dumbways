@@ -100,9 +100,12 @@
     </div>
 
     <div class="bg-body p-5">
-        <h1 class="text-center">MY PROJECT</h1>
+        <h1 class="text-center mt-5">MY PROJECT</h1>
         <div class="d-flex flex-wrap justify-content-center mt-5">
-
+            {{#if data}}
+            {{else}}
+                <h5 class="text-center">still no project here, new project coming soon... 😊</h5>
+            {{/if}}
             {{#each data as |project|}}
             <div class="card shadow card-m-5 mt-5" style="width: 18em;">
                 <img src="{{project.imageupload}}" class="card-img-top project-image" alt="Image cannnot be loaded"
@@ -121,62 +124,13 @@
                     </div>
                     {{#if project.isLogin}}
                     <div class="d-flex align-items-center justify-content-center flex-row mt-3 p-3 project-action">
-                        <button class="btn btn-dark flex-grow-1 ms-1 me-1">edit</button>
-                        <button class="btn btn-dark flex-grow-1 ms-1 me-1">delete</button>
+                        <a href="../editproject/{{project.id}}" class="btn btn-dark flex-grow-1 ms-1 me-1">edit</a>
+                        <a href="../deleteproject/{{project.id}}" class="btn btn-dark flex-grow-1 ms-1 me-1" onclick="return confirm('Are you sure you want to delete this project?');">delete</a>
                     </div>
                     {{/if}}
                 </div>
             </div>
             {{/each}}
-
-            {{!-- <div class="card shadow card-m-5 mt-5" style="width: 18em;">
-                <img src="../assets/img/projek2.jpg" class="card-img-top project-image" alt="Image cannnot be loaded"
-                    style="object-fit:cover; max-height: 200px">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold"><a href="https://suryaa6666.github.io/"
-                            class="text-decoration-none text-black" target="_blank">Website Portofolio Kuliah -
-                            2022</a></h5>
-                    <h6 class="text-secondary">Durasi : 1 bulan</h6>
-                    <p class="card-text">
-                        Website portofolio sederhana, menggunakan template.
-                    </p>
-                    <div class="d-flex flex-row" style="margin-bottom: 60px;">
-                        <i class="fa-2x fa-brands fa-html5 m-2" title="HTML"></i>
-                        <i class="fa-2x fa-brands fa-css3 m-2" title="CSS"></i>
-                        <i class="fa-2x fa-brands fa-js m-2" title="JavaScript"></i>
-                    </div>
-                    {{#if isLogin}}
-                    <div class="d-flex align-items-center justify-content-center flex-row mt-3 p-3 project-action">
-                        <button class="btn btn-dark flex-grow-1 ms-1 me-1">edit</button>
-                        <button class="btn btn-dark flex-grow-1 ms-1 me-1">delete</button>
-                    </div>
-                    {{/if}}
-                </div>
-            </div>
-
-            <div class="card shadow card-m-5 mt-5" style="width: 18em;">
-                <img src="../assets/img/projek3.jpg" class="card-img-top project-image" alt="Image cannnot be loaded"
-                    style="object-fit:cover; max-height: 200px">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold"><a href="https://bequotes.remajaberkreasi.com/"
-                            class="text-decoration-none text-black" target="_blank">BeQuotes -
-                            2021</a></h5>
-                    <h6 class="text-secondary">Durasi : 1 bulan</h6>
-                    <p class="card-text">
-                        Website generator quotes sederhana.
-                    </p>
-                    <div class="d-flex flex-row" style="margin-bottom: 60px;">
-                        <i class="fa-2x fa-brands fa-react m-2" title="React Native"></i>
-                    </div>
-                    {{#if isLogin}}
-                    <div class="d-flex align-items-center justify-content-center flex-row mt-3 p-3 project-action">
-                        <button class="btn btn-dark flex-grow-1 ms-1 me-1">edit</button>
-                        <button class="btn btn-dark flex-grow-1 ms-1 me-1">delete</button>
-                    </div>
-                    {{/if}}
-                </div>
-            </div> --}}
-
         </div>
     </div>
 
