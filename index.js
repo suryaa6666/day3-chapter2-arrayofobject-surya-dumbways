@@ -11,7 +11,8 @@ app.use(express.urlencoded({ extended: false }));
 let isLogin = true;
 
 app.get('/', (req, res) => {
-    res.render('index', { isLogin });
+    res.render('index', { isLogin, dataProject });
+    console.log(dataProject);
 });
 
 app.get('/contact', (req, res) => {
@@ -56,8 +57,42 @@ app.get('/add-project', (req, res) => {
     res.render('add-project');
 });
 
+function dhm(t) {
+    var cd = 24 * 60 * 60 * 1000,
+        ch = 60 * 60 * 1000,
+        d = Math.floor(t / cd),
+        h = Math.floor((t - d * cd) / ch),
+        m = Math.round((t - d * cd - h * ch) / 60000);
+    if (m === 60) {
+        h++;
+        m = 0;
+    }
+    if (h === 24) {
+        d++;
+        h = 0;
+    }
+
+    return d;
+}
+
+let dataProject = [];
+
 app.post('/add-project', (req, res) => {
-    console.log(req.body);
+    let startdate = req.body.startdate;
+    let enddate = req.body.enddate;
+    let duration = dhm(new Date(enddate) - new Date(startdate));
+    duration = Math.floor(duration / 30) <= 0 ? duration + ' hari' : duration % 30 == 0 ? Math.floor(duration / 30) + ' bulan ' : Math.floor(duration / 30) + ' bulan ' + duration % 30 + ' hari';
+
+    let project = {
+        id: dataProject.length + 1,
+        projectname: req.body.projectname,
+        duration,
+        description: req.body.description,
+        technologies: req.body.technologies,
+        imageupload: '../assets/img/projek1.jpg',
+    };
+    dataProject.push(project);
+    res.redirect('/');
 });
 
 app.listen(port, () => {

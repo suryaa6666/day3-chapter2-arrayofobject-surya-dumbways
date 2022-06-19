@@ -103,21 +103,21 @@
         <h1 class="text-center">MY PROJECT</h1>
         <div class="d-flex flex-wrap justify-content-center mt-5">
 
+            {{#each dataProject as |project|}}
             <div class="card shadow card-m-5 mt-5" style="width: 18em;">
-                <img src="../assets/img/projek1.jpeg" class="card-img-top project-image" alt="Image cannnot be loaded"
+                <img src="{{project.imageupload}}" class="card-img-top project-image" alt="Image cannnot be loaded"
                     style="object-fit:cover; max-height: 200px">
                 <div class="card-body">
-                    <h5 class="card-title fw-bold"><a href="project-detail/1"
-                            class="text-decoration-none text-black">Rental PS -
-                            2022</a></h5>
-                    <h6 class="text-secondary">Durasi : 1 bulan</h6>
+                    <h5 class="card-title fw-bold"><a href="project-detail/{{project.id}}"
+                            class="text-decoration-none text-black">{{project.projectname}}</a></h5>
+                    <h6 class="text-secondary">Durasi : {{project.duration}}</h6>
                     <p class="card-text">
-                        Sebuah aplikasi rental PS sederhana yang dibuat untuk memenuhi kebutuhan tugas
-                        akhir basis data.
+                        {{project.description}}
                     </p>
                     <div class="d-flex flex-row" style="margin-bottom: 60px;">
-                        <i class="fa-2x fa-brands fa-react m-2" title="React Native"></i>
-                        <i class="fa-2x fa-solid fa-database m-2" title="MySQL"></i>
+                        {{#each project.technologies as |tech|}}
+                        <i class="fa-2x fa-brands fa-{{tech}} m-2"></i>
+                        {{/each}}
                     </div>
                     {{#if isLogin}}
                     <div class="d-flex align-items-center justify-content-center flex-row mt-3 p-3 project-action">
@@ -127,8 +127,9 @@
                     {{/if}}
                 </div>
             </div>
+            {{/each}}
 
-            <div class="card shadow card-m-5 mt-5" style="width: 18em;">
+            {{!-- <div class="card shadow card-m-5 mt-5" style="width: 18em;">
                 <img src="../assets/img/projek2.jpg" class="card-img-top project-image" alt="Image cannnot be loaded"
                     style="object-fit:cover; max-height: 200px">
                 <div class="card-body">
@@ -174,7 +175,7 @@
                     </div>
                     {{/if}}
                 </div>
-            </div>
+            </div> --}}
 
         </div>
     </div>
