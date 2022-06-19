@@ -11,9 +11,11 @@ app.use(express.urlencoded({ extended: false }));
 let dataProject = [
     {
         id: 1,
-        projectname: 'Aplikasi Rental PS',
-        duration: '23 hari',
-        description: 'Aplikasi ini menggunakan ReactJS dan Firebase untuk mengelola data rental PS',
+        name: 'Aplikasi Rental PS',
+        startdate: '2022-06-01',
+        enddate: '2022-06-30',
+        duration: '1 bulan',
+        description: 'Aplikasi ini menggunakan React Native dan MySQL untuk mengelola data rental PS',
         technologies: ['react', 'android'],
         imageupload: '../assets/img/projek1.jpg'
     }
@@ -75,6 +77,37 @@ app.get('/add-project', (req, res) => {
     res.render('add-project');
 });
 
+app.get('/edit-project/:id', (req, res) => {
+    let id = req.params.id;
+    let project = dataProject.find((item) => {
+        return item.id == id;
+    });
+
+    console.log(project);
+    res.render('edit-project', { project });
+});
+
+app.post('/edit-project/:id', (req, res) => {
+    let id = req.params.id;
+    let name = req.body.name;
+    let startdate = req.body.startdate;
+    let enddate = req.body.enddate;
+    let description = req.body.description;
+    let duration = dhm(new Date(enddate) - new Date(startdate));
+    duration = Math.floor(duration / 30) <= 0 ? duration + ' hari' : duration % 30 == 0 ? Math.floor(duration / 30) + ' bulan ' : Math.floor(duration / 30) + ' bulan ' + duration % 30 + ' hari';
+
+    dataProject.forEach((item) => {
+        if (item.id == id) {
+            item.name = name;
+            item.startdate = startdate;
+            item.enddate = enddate;
+            item.description = description;
+            item.duration = duration;
+        }
+    });
+    res.redirect('/');
+});
+
 function dhm(t) {
     var cd = 24 * 60 * 60 * 1000,
         ch = 60 * 60 * 1000,
@@ -101,7 +134,9 @@ app.post('/add-project', (req, res) => {
 
     let project = {
         id: dataProject.length + 1,
-        projectname: req.body.projectname,
+        name: req.body.name,
+        startdate,
+        enddate,
         duration,
         description: req.body.description,
         technologies: req.body.technologies,
@@ -111,7 +146,7 @@ app.post('/add-project', (req, res) => {
     res.redirect('/');
 });
 
-app.get('/deleteproject/:id', (req, res) => {
+app.get('/delete-project/:id', (req, res) => {
     let id = req.params.id;
     dataProject = dataProject.filter((item) => {
         return item.id != id;

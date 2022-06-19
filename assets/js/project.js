@@ -1,13 +1,13 @@
 let technologies = [];
 
 const submitData = (event) => {
-    let projectname = document.getElementById("projectname").value;
+    let name = document.getElementById("name").value;
     let startdate = document.getElementById("startdate").value;
     let enddate = document.getElementById("enddate").value;
     let description = document.getElementById("description").value;
     let imageupload = document.getElementById("imageupload").files;
 
-    if (projectname == '') {
+    if (name == '') {
         alert('Please insert a project name!');
         event.preventDefault();
         return;
