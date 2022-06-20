@@ -129,9 +129,9 @@
     let android = document.getElementById("android");
 
     let hiddentech = document.getElementById("hidden-tech").value;
-    let tech = hiddentech.split(",");
-
-    console.log(tech);
+    let tech = hiddentech;
+    if (hiddentech.includes(","))
+      tech = hiddentech.split(",");
 
     if (tech.includes("node")) {
       node.checked = true;
@@ -150,10 +150,10 @@
     }
 
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
-    </script>
   <script src="../assets/js/project.js">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+  </script>
   </script>
 </body>
 

@@ -95,7 +95,9 @@ app.post('/edit-project/:id', (req, res) => {
     let enddate = req.body.enddate;
     let description = req.body.description;
     let duration = dhm(new Date(enddate) - new Date(startdate));
+    let tech = req.body.technologies;
     duration = Math.floor(duration / 30) <= 0 ? duration + ' hari' : duration % 30 == 0 ? Math.floor(duration / 30) + ' bulan ' : Math.floor(duration / 30) + ' bulan ' + duration % 30 + ' hari';
+    console.log(tech);
 
     dataProject.forEach((item) => {
         if (item.id == id) {
@@ -104,8 +106,10 @@ app.post('/edit-project/:id', (req, res) => {
             item.enddate = enddate;
             item.description = description;
             item.duration = duration;
+            item.technologies = tech;
         }
     });
+
     res.redirect('/');
 });
 
