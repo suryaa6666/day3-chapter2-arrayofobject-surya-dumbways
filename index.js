@@ -84,7 +84,8 @@ app.get('/edit-project/:id', (req, res) => {
     });
 
     console.log(project);
-    res.render('edit-project', { project });
+    let tech = project.technologies.toString();
+    res.render('edit-project', { project, tech });
 });
 
 app.post('/edit-project/:id', (req, res) => {
