@@ -1,5 +1,13 @@
 let technologies = [];
 
+let node = document.getElementById("node");
+let angular = document.getElementById("angular");
+let react = document.getElementById("react");
+let android = document.getElementById("android");
+
+let hiddentech = document.getElementById("hidden-tech").value;
+let tech = hiddentech;
+
 if (node.checked) {
     technologies.push(node.value);
 }
@@ -12,6 +20,27 @@ if (react.checked) {
     technologies.push(react.value);
 }
 
+
+//if (hiddentech.includes(","))
+// tech = hiddentech.split(",");
+
+if (tech.includes("node")) {
+    node.checked = true;
+}
+
+if (tech.includes("react")) {
+    react.checked = true;
+}
+
+if (tech.includes("angular")) {
+    angular.checked = true;
+}
+
+if (tech.includes("android")) {
+    android.checked = true;
+}
+
+
 if (android.checked) {
     technologies.push(android.value);
 }
@@ -22,7 +51,7 @@ const submitData = (event) => {
     let enddate = document.getElementById("enddate").value;
     let description = document.getElementById("description").value;
     let imageupload = document.getElementById("imageupload").files;
-    
+
     if (name == '') {
         alert('Please insert a project name!');
         event.preventDefault();

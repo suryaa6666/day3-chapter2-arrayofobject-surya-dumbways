@@ -31,8 +31,13 @@ app.get('/', (req, res) => {
         }
     });
 
+    data.forEach((item) => {
+        if (typeof (item.technologies) == 'string') {
+            item.technologies = [item.technologies];
+        }
+    });
+
     res.render('index', { isLogin, data });
-    console.log(dataProject);
 });
 
 app.get('/contact', (req, res) => {
