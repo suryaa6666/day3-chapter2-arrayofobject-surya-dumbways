@@ -41,7 +41,8 @@
     <h1 class="text-center">{{projectDetail.name}}</h1>
     <div class="project-detail mt-5">
       <div class="project-detail-image-container">
-        <img src="{{projectDetail.image}}" class="card-img-top project-detail-image" alt="Image cannnot be loaded" />
+        <img src="../assets/imageupload/{{projectDetail.imageupload}}" class="card-img-top project-detail-image"
+          alt="Image cannnot be loaded" />
       </div>
       <div class="project-detail-description ms-5">
         <div>
@@ -59,27 +60,13 @@
         </div>
         <div>
           <h3>Technologies</h3>
-          <div class="d-flex flex-row">
-            <div class="d-flex flex-column me-3">
-              <p>
-                <i class="fa-brands fa-react"></i>
-                React JS
-              </p>
-              <p>
-                <i class="fa-brands fa-node-js"></i>
-                Node JS
-              </p>
-            </div>
-            <div class="d-flex flex-column">
-              <p>
-                <i class="fa-brands fa-js"></i>
-                JavaScript
-              </p>
-              <p>
-                <i class="fa-solid fa-bolt"></i>
-                Socket IO
-              </p>
-            </div>
+          <div class="project-detail-technologies-wrapper">
+            <p>
+              {{#each projectDetail.technologies as |technologies|}}
+              <i class="fa-brands fa-{{technologies}}"></i>
+              {{technologies}}
+              {{/each}}
+            </p>
           </div>
         </div>
       </div>

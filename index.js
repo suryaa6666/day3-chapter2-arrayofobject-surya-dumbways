@@ -1,4 +1,9 @@
 const express = require('express');
+// const bodyParser = require('body-parser');
+// const fileupload = require('express-fileupload');
+const multipart = require('connect-multiparty');
+const fs = require('fs');
+let multipartMiddleware = multipart({ uploadDir: './assets/imageupload' });
 
 const app = express();
 const port = 8000;
@@ -7,6 +12,9 @@ app.set('view engine', 'hbs'); // view engine is set to handlebars
 
 app.use('/assets', express.static(__dirname + '/assets')); // static files are served from the assets folder
 app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(fileupload());
 
 let dataProject = [
     {
@@ -17,7 +25,7 @@ let dataProject = [
         duration: '1 bulan',
         description: 'Aplikasi ini menggunakan React Native dan MySQL untuk mengelola data rental PS',
         technologies: ['react', 'android'],
-        imageupload: '../assets/img/projek1.jpg'
+        imageupload: 'projek1.jpg'
     }
 ];
 
@@ -37,7 +45,19 @@ app.get('/', (req, res) => {
         }
     });
 
+    console.log(data)
+
     res.render('index', { isLogin, data });
+});
+
+app.get('/project-detail/:id', (req, res) => {
+    let id = req.params.id;
+
+    let projectDetail = dataProject.find((item) => {
+        return item.id == id;
+    })
+
+    res.render('project-detail', { projectDetail });
 });
 
 app.get('/contact', (req, res) => {
@@ -136,11 +156,15 @@ function dhm(t) {
     return d;
 }
 
-app.post('/add-project', (req, res) => {
+app.post('/add-project', multipartMiddleware, (req, res) => {
     let startdate = req.body.startdate;
     let enddate = req.body.enddate;
     let duration = dhm(new Date(enddate) - new Date(startdate));
     duration = Math.floor(duration / 30) <= 0 ? duration + ' hari' : duration % 30 == 0 ? Math.floor(duration / 30) + ' bulan ' : Math.floor(duration / 30) + ' bulan ' + duration % 30 + ' hari';
+    let imagepath = req.files.imageupload.path;
+    let imageupload = imagepath.split('\\');
+    imageupload = imageupload[imageupload.length - 1];
+    // console.log(imageupload[imageupload.length - 1]);
 
     let project = {
         id: dataProject.length + 1,
@@ -150,17 +174,27 @@ app.post('/add-project', (req, res) => {
         duration,
         description: req.body.description,
         technologies: req.body.technologies,
-        imageupload: '../assets/img/projek1.jpg',
+        imageupload,
     };
+
+    // console.log(req.files);
     dataProject.push(project);
     res.redirect('/');
 });
 
 app.get('/delete-project/:id', (req, res) => {
     let id = req.params.id;
+
+    let dataSelected = dataProject.find((item) => {
+        return item.id == id;
+    });
+
+    fs.unlinkSync(`assets/imageupload/${dataSelected.imageupload}`);
+
     dataProject = dataProject.filter((item) => {
         return item.id != id;
-    })
+    });
+
     res.redirect('/');
 });
 
