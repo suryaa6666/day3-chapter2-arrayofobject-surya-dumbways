@@ -1,8 +1,8 @@
 const express = require('express');
 // const bodyParser = require('body-parser');
 // const fileupload = require('express-fileupload');
-const multipart = require('connect-multiparty');
 const fs = require('fs');
+const multipart = require('connect-multiparty');
 let multipartMiddleware = multipart({ uploadDir: './assets/imageupload' });
 
 const app = express();
@@ -113,16 +113,20 @@ app.get('/edit-project/:id', (req, res) => {
     res.render('edit-project', { project, tech });
 });
 
-app.post('/edit-project/:id', (req, res) => {
+app.post('/edit-project/:id', multipartMiddleware, (req, res) => {
     let id = req.params.id;
     let name = req.body.name;
     let startdate = req.body.startdate;
     let enddate = req.body.enddate;
     let description = req.body.description;
     let duration = dhm(new Date(enddate) - new Date(startdate));
-    let tech = req.body.technologies;
     duration = Math.floor(duration / 30) <= 0 ? duration + ' hari' : duration % 30 == 0 ? Math.floor(duration / 30) + ' bulan ' : Math.floor(duration / 30) + ' bulan ' + duration % 30 + ' hari';
-    console.log(tech);
+    let technologies = req.body.technologies;
+    let imagepath = req.files.imageupload.path;
+    let imageupload = imagepath.split('\\');
+    imageupload = imageupload[imageupload.length - 1];
+    // console.log(imageupload);
+    // console.log(tech);
 
     dataProject.forEach((item) => {
         if (item.id == id) {
@@ -131,7 +135,8 @@ app.post('/edit-project/:id', (req, res) => {
             item.enddate = enddate;
             item.description = description;
             item.duration = duration;
-            item.technologies = tech;
+            item.technologies = technologies;
+            item.imageupload = imageupload;
         }
     });
 
