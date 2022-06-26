@@ -29,6 +29,10 @@ const projectDetail = (req, res) => {
         return item.id == id;
     })
 
+    if (typeof (projectDetail.technologies) == 'string') {
+        projectDetail.technologies = [projectDetail.technologies];
+    }
+
     res.render('project-detail', { projectDetail });
 }
 
