@@ -2,7 +2,7 @@ const express = require('express');
 const { index, projectDetail, contact, addProject, editProject, deleteProject, postAddProject, postEditProject } = require('./controllers/controllers');
 
 const app = express();
-const port = 8000;
+const port = 3000;
 
 app.set('view engine', 'hbs'); // view engine is set to handlebars
 
@@ -25,7 +25,7 @@ app.post('/add-project', postAddProject);
 
 app.post('/edit-project/:id', postEditProject);
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
