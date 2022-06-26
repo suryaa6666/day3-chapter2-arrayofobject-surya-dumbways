@@ -40,7 +40,7 @@
   <div class="me-5 ms-5 mt-5 mb-5 d-flex justify-content-center">
     <div class="project-container">
       <h1 class="text-center">ADD MY PROJECT</h1>
-      <form class="mt-5" method="POST" enctype="multipart/form-data">
+      <form class="mt-5" method="POST">
         <div class="mb-3">
           <label for="name" class="form-label">Project Name</label>
           <input type="text" class="form-control shadow" id="name" value="{{project.name}}" name="name" />
@@ -122,12 +122,10 @@
 
   <input type="hidden" value="{{tech}}" id="hidden-tech">
 
-  <script src="../assets//js/edit-checkbox.js"></script>
-  <script src="../assets/js/project.js">
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
     </script>
+  <script src="../assets//js/editProject.js"></script>
 </body>
 
 </html>
