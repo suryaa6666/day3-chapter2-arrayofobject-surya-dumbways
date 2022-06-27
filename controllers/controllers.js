@@ -50,8 +50,8 @@ const editProject = (req, res) => {
         return item.id == id;
     });
 
-    let tech = project.technologies.toString();
-    res.render('edit-project', { project, tech });
+    project.technologies = project.technologies.toString();
+    res.render('edit-project', { project });
 }
 
 const postAddProject = (req, res) => {
