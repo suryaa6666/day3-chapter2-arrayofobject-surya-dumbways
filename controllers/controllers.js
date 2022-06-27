@@ -55,8 +55,11 @@ const editProject = (req, res) => {
 }
 
 const postAddProject = (req, res) => {
+    let name = req.body.name;
     let startdate = req.body.startdate;
     let enddate = req.body.enddate;
+    let description = req.body.description;
+    let technologies = req.body.technologies;
     let duration = dhm(new Date(enddate) - new Date(startdate));
     duration = Math.floor(duration / 30) <= 0 ? duration + ' hari' : duration % 30 == 0 ? Math.floor(duration / 30) + ' bulan ' : Math.floor(duration / 30) + ' bulan ' + duration % 30 + ' hari';
 
@@ -65,12 +68,12 @@ const postAddProject = (req, res) => {
 
     let project = {
         id: dataProject.length + 1,
-        name: req.body.name,
+        name,
         startdate,
         enddate,
         duration,
-        description: req.body.description,
-        technologies: req.body.technologies,
+        description,
+        technologies,
         imageupload,
     };
 
